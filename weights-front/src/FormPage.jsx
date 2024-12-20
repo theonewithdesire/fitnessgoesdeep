@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function FormPage({ setResults }) {
+function FormPage({ setResults, goal }) {
   const [formData, setFormData] = useState({
     gender: '',
     age: '',
@@ -22,10 +22,8 @@ function FormPage({ setResults }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Update form data
     setFormData({ ...formData, [name]: value });
 
-    // Validate inputs and set error messages
     let error = '';
     if (name === 'age' && (value < 10 || value > 100)) {
       error = 'Age must be between 10 and 100.';
@@ -40,21 +38,12 @@ function FormPage({ setResults }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Form Data:', formData);
-
-    // Ensure no errors before submission
     if (errors.age || errors.weight || errors.height) {
       alert('Please correct the errors before submitting.');
       return;
     }
 
-    if (
-      !formData.age ||
-      !formData.height ||
-      !formData.weight ||
-      !formData.gender ||
-      !formData.activity
-    ) {
+    if (Object.values(formData).some(field => !field)) {
       alert('All fields are required.');
       return;
     }
@@ -62,7 +51,7 @@ function FormPage({ setResults }) {
     try {
       const response = await axios.post('http://localhost:6003/calculate', {
         ...formData,
-        goal: 'lose', // You can change this to "gain" based on user preference
+        goal,
       });
 
       const { maintenanceCalories, resultCalories } = response.data;
@@ -80,7 +69,7 @@ function FormPage({ setResults }) {
         onSubmit={handleSubmit}
         className="bg-dark-blue shadow-lg rounded-lg p-8 w-full max-w-md space-y-4"
       >
-        <h1 className="text-2xl font-bold text-center">WeightsUp&Down</h1>
+        <h1 className="text-2xl font-bold text-center">FitnessGoesDeep</h1>
         <p className="text-sm text-gray-400 text-center mb-4">
           Your personalized calorie calculator
         </p>
@@ -112,7 +101,7 @@ function FormPage({ setResults }) {
               errors.age ? 'focus:ring-red-500' : 'focus:border-blue-300'
             }`}
             placeholder="Enter your age"
-            step="1" // Disable number input adjustment
+            step="1"
           />
           {errors.age && <p className="text-red-500 text-sm">{errors.age}</p>}
         </label>
@@ -130,7 +119,7 @@ function FormPage({ setResults }) {
               errors.weight ? 'focus:ring-red-500' : 'focus:border-blue-300'
             }`}
             placeholder="Enter your weight"
-            step="1" // Disable number input adjustment
+            step="1"
           />
           {errors.weight && (
             <p className="text-red-500 text-sm">{errors.weight}</p>
@@ -150,7 +139,7 @@ function FormPage({ setResults }) {
               errors.height ? 'focus:ring-red-500' : 'focus:border-blue-300'
             }`}
             placeholder="Enter your height"
-            step="1" // Disable number input adjustment
+            step="1"
           />
           {errors.height && (
             <p className="text-red-500 text-sm">{errors.height}</p>

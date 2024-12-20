@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function ResultsPage({ results }) {
+function ResultsPage({ results, goal }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('Results:', results);
     if (!results) {
       navigate('/');
     }
@@ -16,8 +15,6 @@ function ResultsPage({ results }) {
   }
 
   const { maintenanceCalories, resultCalories } = results;
-  const surplusCalories = Math.round(maintenanceCalories + 500);
-  const deficitCalories = Math.round(maintenanceCalories - 500);
 
   return (
     <div className="min-h-screen bg-navy text-white flex items-center justify-center p-4">
@@ -31,14 +28,18 @@ function ResultsPage({ results }) {
             <h2 className="text-lg font-bold">Maintenance Calories</h2>
             <p>{Math.round(maintenanceCalories)} kcal/day</p>
           </div>
-          <div className="bg-navy p-4 rounded-md">
-            <h2 className="text-lg font-bold">Surplus Calories</h2>
-            <p>{surplusCalories} kcal/day</p>
-          </div>
-          <div className="bg-navy p-4 rounded-md">
-            <h2 className="text-lg font-bold">Deficit Calories</h2>
-            <p>{deficitCalories} kcal/day</p>
-          </div>
+          {goal === 'gain' && (
+            <div className="bg-navy p-4 rounded-md">
+              <h2 className="text-lg font-bold">Surplus Calories</h2>
+              <p>{Math.round(resultCalories)} kcal/day</p>
+            </div>
+          )}
+          {goal === 'lose' && (
+            <div className="bg-navy p-4 rounded-md">
+              <h2 className="text-lg font-bold">Deficit Calories</h2>
+              <p>{Math.round(resultCalories)} kcal/day</p>
+            </div>
+          )}
         </div>
         <button
           onClick={() => navigate('/')}
@@ -46,7 +47,6 @@ function ResultsPage({ results }) {
         >
           Back to Form
         </button>
-        {/* Removed the raw JSON results display */}
       </div>
     </div>
   );
