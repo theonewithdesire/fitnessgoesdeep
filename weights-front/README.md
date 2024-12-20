@@ -1,8 +1,44 @@
-# React + Vite
+# FitnessGoesDeep
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+FitnessGoesDeep is a simple web application that calculates the daily calorie intake you need to achieve your weight goals, whether it's to lose or gain weight, based on the information you provide. This web app uses React, Tailwind CSS, and Express.js.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Follow these steps to run the application:
+
+### Backend Setup
+
+1. Navigate to the backend directory:
+
+   ```sh
+   cd calorie-calculator/weights-back
+   ```
+
+2. Start the backend server:
+   ```sh
+   node server.js
+   ```
+
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+
+   ```sh
+   cd ../weights-front
+   ```
+
+2. Install the dependencies:
+
+   ```sh
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```sh
+   npm run dev
+   ```
+
+4. Open your browser and go to the provided localhost URL to access the application.
+
+Enjoy using FitnessGoesDeep to achieve your fitness goals!
